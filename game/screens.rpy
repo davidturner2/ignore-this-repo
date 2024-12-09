@@ -1267,16 +1267,25 @@ screen notify(message):
     zorder 100
     style_prefix "notify"
 
-    frame at notify_appear:
-        text "[message!tq]"
+    
+    text "[message!t]" at notify_appear:
+        size 70
+        outlines [ (absolute(3), "#ffffff", absolute(0), absolute(0)) ]
+
+
 
     timer 3.25 action Hide('notify')
 
 
 transform notify_appear:
     on show:
+        xalign 0.5
+        zoom 0
+        yalign 0.5
         alpha 0
-        linear .25 alpha 1.0
+        linear .25 alpha 0.8    
+        easein_elastic 3 zoom 1
+  
     on hide:
         linear .5 alpha 0.0
 
