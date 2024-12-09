@@ -38,7 +38,6 @@ define rizz = Character("Daddy Rizz",what_prefix="{cps=25}",who_color="#000000" 
 #define rizz = Character("Daddy Rizz",who_color="#000000" )
 define at = Character("Andrew Tate", who_color="#000000",who_outlines=[( 1, "#ffffff", 0, 0 )],what_outlines=[( 1, "#ffffff", 0, 0 )], window_background=None)
 
-e1a "If it's set to None, the textbox has no background window."
  
 # The game starts here.
 default name = "Andrew"
@@ -49,7 +48,13 @@ label start:
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
     #moon2 "are you ready to have {shader=jitter}babies with me?{/shader}" 
-
+    screen button_example():
+        frame:
+            xalign 0.5 ypos 50
+            button:
+                action Notify("You clicked the button.")
+                text "Click me." style "button_text"
+    call screen button_example
     window hide dissolve
 
     pause 1.0
@@ -67,7 +72,7 @@ label start:
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
-    at "{cps=25}Men in this society have it hard... like my reproductive organ."    
+    at "{cps=25}Men in this society have it hard... {w}like my reproductive organ."    
  
 
 
@@ -117,14 +122,16 @@ label label_name:
     with Dissolve(.5)
     show math:        
         yalign 0.0
-        linear 1 yalign 0.4
+        linear 0.5 yalign 0.4
+        linear 0.5 yalign 0.0
         repeat
     mathteacher "Okay, welcome back, nerds. I know most professors make you introduce yourselves, but I don't care. Y’all can awkwardly mingle on your own time. Today, I'm talking about processing."
-    rizz "We’re skipping this, cause its boring. I mean it's a game design class. back in my day the only game we played were getting girls in my crib"
+    rizz "We’re skipping this, cause its boring. I mean it's a game design class. back in my day the we game we was at the club getting girls getting maidens."
     mathteacher "Thats it for today. Bye "
     show math:        
         yalign 0.0
         linear 1 offscreenleft
+    mc "choose interaction or work \"WIP\""
     show nerdy
     with Dissolve(.5)
     nerd "hey [name]! Is your shirt the same blue as Sonic in Sonic Adventure? "
@@ -139,7 +146,7 @@ menu:
         show sss:        
             offscreenleft
             easein_elastic 3 xalign 0.0
-        yes "SORRY YOU HAVE TO PAY $9,000,000,000,000,000,000,000 SUBSCRIPTION TO THE PATREON TO PLAY THE FULL RELEASE THAT INCLUDES MINIGAMES"
+        yes "SORRY YOU HAVE TO PAY $9,000,000,000,000,000,000,000 SUBSCRIPTION TO THE PATREON TO PLAY THE FULL RELEASE"
         
 
     "um yes":
@@ -151,7 +158,7 @@ menu:
         show sss:        
             offscreenleft
             linear 1 xalign 0.0
-        yes "TO PLAY THE REST OF THE GAME WITH UNCENSORED SCENES SUBSCRIBE TO THE PATREON FOR $9,000,000,000,000,000,000,000"
+        yes "TO PLAY THE REST OF THE GAME WITH PG13 SCENES SUBSCRIBE TO THE PATREON FOR $9,000,000,000,000,000,000,000"
 
 label after_menu:
     nerd "FRICK YOU [name] IM GONNA DATE SHADOW INSTEAD OF YOU"
