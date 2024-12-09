@@ -49,10 +49,21 @@ screen button_example(a):
         button action Jump("explore"):
             text "[a]" style "button_text"
 screen calender:
-    text "Week [week]":
+    text "{color=#fff}Week [week]":
         xalign 0.5
         yalign 0
-    
+screen map:
+    frame:
+    text "Go to"
+        button action Jump("class"):
+            text "Class" style "button_text"
+        button action Jump("main_halls"):
+            text "Main halls" style "button_text"
+        button action Jump("class_hall"):
+            text "class halll" style "button_text"
+        button action Jump("building_entrance"):
+            text "Building entrance" style "button_text"
+
 
 label start:
     #play sound "fmc.mp3"
@@ -183,21 +194,26 @@ label ahh:
 
 
 label after_menu:
+    scene class vb ≤
     if week == 1:
         show nerdy:        
             yalign 0.0
             linear 1 offscreenleft
         MC "ahh"
-        call screen button_example("sonic girl love you")
+        call screen button_example("explore")
 
    
 
 label explore:
     if week == 1:        
-        MC "ahhahahahah"        
+        MC "ahhahahahah"
+        call screen map()       
 
 
-    return
+
+label class:
+    scene class
+    "You have no class right now."
 
 
         
