@@ -50,7 +50,7 @@ default sonicLove = 0
 define Rizz = Character("Daddy Rizz",what_prefix="{cps=25}",who_color="#000000" )
 #define Rizz = Character("Daddy Rizz",who_color="#000000" )
 define at = Character("Andrew Tate", who_color="#000000",who_outlines=[( 1, "#ffffff", 0, 0 )],what_outlines=[( 1, "#ffffff", 0, 0 )], window_background=None)
-define Woo = Character("Woo", who_color="#000000",who_outlines=[( 1, "#ffffff", 0, 0 )],what_outlines=[( 1, "#ffffff", 0, 0 )])
+define Woo = Character("Woo", what_prefix="{cps=25}",who_color="#000000",who_outlines=[( 1, "#ffffff", 0, 0 )],what_outlines=[( 1, "#ffffff", 0, 0 )])
 
  
 # The game starts here.
@@ -77,12 +77,14 @@ screen calender:
         yalign 0
 screen map:
     frame:
+        background "whites" size 12
         vbox:
             spacing 10 
             text "Go to"      
-            button action Jump("class"):                
-                if week == 2 or week == 4 or week == 3:
-                    text "Class{color=#f00}!" style "button_text"
+            button action Jump("class"):
+                if morning==False:                
+                    if week == 2 or week == 4 or week == 3:
+                        text "Class{color=#f00}!" style "button_text"
                 else:
                     text "Class" style "button_text"
             button action Jump("main_halls"):
@@ -317,6 +319,7 @@ label goth_lab2:
                 Rizz "Congrats, you’re on her good side. I think. Try not to ruin it."
             python:
                 renpy.notify("{color=#0f0}Love +1.")
+            jump weekend
             $gothLove +=1
 
 
@@ -325,8 +328,7 @@ label weekend:
     Rizz "Damn the time really went by, head home hotshot"
     $morning = False    
     $goth1 = False
-    hide gothy
-    call screen map()
+    jump main_halls
 
 label explore:
     call screen map()       
@@ -414,7 +416,47 @@ label class:
             jump ohyea
         
     else:
-        if week == 3 or week == 4:
+        if week == 3:
+            if week==4:
+                if teacherLove <= -1:
+                    Teacher "Good morning. Let's get started. Today we’ll dive into Wordsworth, not to be confused with whatever you might be doing instead of listening."
+                    Rizz "Yikes, you’re not getting any special treatment today."
+                    Teacher "Now, for those of you who decided to show up to the library on time and do the work, thank you. And for the rest of you, remember, I’ll be reviewing your efforts for participation."
+                    Teacher "The rest of you can stay awake long enough to get through this, right?"
+                    Rizz "Bro, you’re just another face in the crowd right now. You’ll have to work harder to break that ice."
+                if teacherLove >= 1:
+                    Teacher "Good morning. Let’s get into Wordsworth, shall we? Or should I say, let’s get into the noble struggle of man versus nature?"
+                    Rizz "Dude, she’s looking at you with “I kinda like you” energy. Keep it cool."
+                    Teacher "Now, I’m sure most of you would rather be somewhere else right now, but bear with me. Poetry can actually be fun."
+                    Teacher "Some of you in the class know that already, don’t you? I’m looking at you, library star."
+                    Teacher "Anyway, if you actually read Wordsworth, you might understand why nature is so deeply connected to the human experience. It’s not just trees and lakes, it’s the essence of life itself."
+                    Teacher "As for the rest of you… well, if you’re not in this for the love of language, I suggest you at least pretend for the grade."
+                    Teacher "But you, library star, I expect you to have some deep thoughts on the nature of words by now. You’ve been doing more than just shelving books, right?"
+                    Rizz "Bro, you’re basically the TA at this point. She’s like, low-key impressed with you."
+                menu:
+                    "Try to catch her attention after class":
+                        python:
+                            renpy.notify("{color=#0f0}Love +1.")
+                        $teacherLove +=1
+                        if teacherLove == -1:
+                            MC "So, outside of teaching, what do you do? You must have some hobbies, right?"
+                            Teacher "I guess I don’t get asked that very often. I mostly spend my time grading papers or pretending to have a life."
+                            Teacher "Honestly, it’s mostly reading, anything from classic literature to whatever’s trending on the best-seller lists. I guess you could say I work all the time."
+                            Teacher "Not exactly the exciting answer you were hoping for, huh? But teaching is more than just a job; it’s a whole lifestyle. Not everyone can handle it."
+                            Rizz "She’s not opening up today, huh? Guess you’ll have to try harder."
+
+                        if teacherLove >= 1:
+                            MC "So, outside of teaching… What do you do? I’m sure there’s more to you than just books and lectures."
+                            Teacher "I guess most people don’t ask me about that. Well, when I’m not stuck in the classroom, I’m usually reading, writing, or going to those boring faculty meetings that feel like they’ll never end."
+                            Teacher "I’m also trying to get back into writing fiction, actually. Teaching’s a full-time job, so I don’t get to spend as much time on it as I’d like. It’s a little hard to balance the two."
+                            Rizz "Okay, she's not shutting you down, but don’t go getting too personal. You’re doing fine, though."
+                            MC "I should get going."
+                            Teacher "Okay goodbye [name]"
+                        $morning = False
+                        jump class_hall
+                    "Leave quietly":
+                        $morning = False
+                        jump class_hall
             if morning:
                 $morning = False
                 "Class finished"
@@ -452,9 +494,7 @@ label ohyea:
             if sonicLove >= 2:
                 Sonic "Oh, look at you, Mr. Confident. Fine, let’s do it your way. Just don’t get carried away."
                 Rizz "She’s vibing with you. You’ve got the green light—make it count."
-            $morning = False
-            $sonic2 = False
-            jump class_hall
+          
 
         "Divide The Work":
             if sonicLove == -2:
@@ -462,23 +502,24 @@ label ohyea:
                 Rizz "Man, she’s got trust issues. Can’t blame her if you keep slacking."
 
             if sonicLove == -1:
-                Sonic "You do your half, I’ll do mine. But don’t expect me to fix your mess."
-                Rizz "Man, she’s got trust issues. Can’t blame her if you keep slacking."
-
+                Sonic "That’s probably for the best. Just… keep it simple, okay?"
+                Rizz "A reluctant truce. Let’s see if you can impress her."
             if sonicLove == 0:
-                Sonic "You do your half, I’ll do mine. But don’t expect me to fix your mess."
-                Rizz "Man, she’s got trust issues. Can’t blame her if you keep slacking."
-
+                Sonic "Sounds good. Let’s meet in the middle if we need to."
+                Rizz "A fair split. It’s like Sonic and Tails—teamwork makes the dream work."
             if sonicLove == 1:
-                Sonic "You do your half, I’ll do mine. But don’t expect me to fix your mess."
-                Rizz "Man, she’s got trust issues. Can’t blame her if you keep slacking."
-
+                Sonic "Works for me. And hey, if you need help, just let me know."
+                Rizz "Look at that. She’s offering to help? That’s practically a love confession."
             if sonicLove >= 2:
-                Sonic "You do your half, I’ll do mine. But don’t expect me to fix your mess."
-                Rizz "Man, she’s got trust issues. Can’t blame her if you keep slacking."
-            $morning = False
-            $sonic2 = False
-            jump class_hall
+                Sonic "Sure thing. Teamwork makes the dream work, right? We’ve got this."
+                Rizz "She’s hyped for this partnership. You’re in sync, my guy"
+    Sonic "Well, that wasn’t too bad. We got through it without any major screw-ups. Not bad for a bunch of newbies."
+    Rizz "Hey, not bad at all. You managed to keep it together. Looks like you're getting closer to pulling off a solid team-up."
+    Sonic "Yeah, I guess I’ll let you live. But next time, don’t hold back. Let's see what you really got."
+    Rizz "Bro, you're cruising. Keep the momentum going—looks like you've earned her trust... for now."
+    $morning = False
+    $sonic2 = False
+    jump class_hall
 
 label work:
     scene lib with Dissolve(0.5)
@@ -555,7 +596,7 @@ label main_halls:
             
 
             "Dip":
-                $sonicLove+=1
+                $sonicLove-=1
                 python:
                     if sonicLove<=-3:
                         renpy.notify("{color=#f00}Love -1. She will avoid you for now on")
@@ -640,6 +681,8 @@ label building_entrance:
                 Rizz" Bro, she’s smiling. Keep riding this wave—don’t sink it with awkwardness."
             menu:
                 "Stay and chat":
+                    python:
+                        renpy.notify("{color=#0f0}Love +1.")
                     $sonicLove +=1
                     jump date                
 
