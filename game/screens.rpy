@@ -1270,6 +1270,9 @@ screen notify(message):
 
     
     text "[message!t]" at notify_appear:
+        xalign 0.5
+        yalign 0.5
+
         size 70
         outlines [ (absolute(3), "#ffffff", absolute(0), absolute(0)) ]
 
